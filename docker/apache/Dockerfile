@@ -12,5 +12,6 @@ RUN apt-get update && apt-get install -y \
   && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
   && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt-get install -y nodejs npm
+  && apt-get install -y nodejs npm \
+  && a2enmod rewrite
 WORKDIR /var/www/html
