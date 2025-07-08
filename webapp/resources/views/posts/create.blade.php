@@ -19,13 +19,25 @@
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
         <label>タイトル:</label><br>
-        <input type="text" name="title"><br><br>
+        <input type="text" name="title" value="{{ old('title') }}"><br>
+        @error('title')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br>
 
         <label>本文:</label><br>
-        <textarea name="content"></textarea><br><br>
+        <textarea name="content">{{ old('content') }}</textarea><br>
+        @error('content')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br>
 
         <label>投稿者ID:</label><br>
-        <input type="number" name="author_id"><br><br>
+        <input type="number" name="author_id" value="{{ old('author_id') }}"><br>
+        @error('author_id')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <br>
 
         <button type="submit">投稿する</button>
     </form>
