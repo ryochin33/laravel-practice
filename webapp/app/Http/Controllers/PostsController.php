@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 
 class PostsController extends Controller
@@ -28,28 +28,20 @@ class PostsController extends Controller
     {
         return view('posts.create');
     }
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'author_id' => 'required|integer',
-        ]);
+        $validated = $request->validated();
         Post::create($validated);
-        return redirect()->route('posts.index')->with('success', '投稿が作成しました');
+        return redirect()->route('posts.index')->with('success', '投稿が作成されました');
     }
     public function edit($id)
     {
         $post = Post::findOrFail($id);
         return view('posts.edit', compact('post'));
     }
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'author_id' => 'required|integer',
-        ]);
+        $validated = $request->validated();
         $post = Post::findOrFail($id);
         $post->update($validated);
         return redirect()->route('posts.show', $post->id)->with('success', '投稿が更新されました');
